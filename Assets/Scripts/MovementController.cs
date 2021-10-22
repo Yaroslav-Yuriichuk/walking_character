@@ -5,6 +5,8 @@ public class MovementController : MonoBehaviour
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private Animator _animator;
 
+    public float TotalDistance { get; private set; }
+        
     private int _speedHash;
 
     private const float Gravity = -9.81f;
@@ -20,6 +22,7 @@ public class MovementController : MonoBehaviour
     private void Start()
     {
         Cursor.visible = false;
+        TotalDistance = 0;
         _speedHash = Animator.StringToHash("Speed");
     }
 
@@ -40,6 +43,8 @@ public class MovementController : MonoBehaviour
         _animator.SetFloat(_speedHash, _speed);
 
         _characterController.Move(transform.forward * _speed * Time.deltaTime);
+        TotalDistance += _speed * Time.deltaTime;
+            
         if (_speed > 0)
         {
             transform.Rotate(Vector3.up, TurnSpeed * turn * Time.deltaTime);
