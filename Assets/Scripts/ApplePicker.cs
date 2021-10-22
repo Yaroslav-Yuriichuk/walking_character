@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ApplePicker : MonoBehaviour
 {
-    [SerializeField] private int _applesPicked = 0;
+    public int ApplesPicked { get; private set; } = 0;
     private string _lastTouchedAppleName = "";
     
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -15,7 +15,7 @@ public class ApplePicker : MonoBehaviour
         if (objectCollided.CompareTag("Apple") && _lastTouchedAppleName != objectCollided.name)
         {
             Destroy(objectCollided);
-            _applesPicked++;
+            ApplesPicked++;
             _lastTouchedAppleName = objectCollided.name;
         }
     }
