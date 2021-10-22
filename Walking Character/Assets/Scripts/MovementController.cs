@@ -6,20 +6,23 @@ public class MovementController : MonoBehaviour
     [SerializeField] private Animator _animator;
 
     private int _speedHash;
+    private int _turnHash;
     
     private float _speed = 0f;
     private const float _maxSpeed = 6f;
-    private const float _speedAcceleration = 2f;
+    private const float _speedAcceleration = 5f;
     private const float _speedDeacceleration = -4f;
     
-    private const float _turnSpeed = 160f;
+    private const float _turnSpeed = 96.46f;
     /*private const float _maxTurnSpeed = 180f;
     private const float _turnAcceleration = 90f;
     private const float _turnDeacceleration = -135f;*/
 
     private void Start()
     {
+        Cursor.visible = false;
         _speedHash = Animator.StringToHash("Speed");
+        _turnHash = Animator.StringToHash("Turn");
     }
 
     private void Update()
@@ -37,6 +40,7 @@ public class MovementController : MonoBehaviour
         }
         
         _animator.SetFloat(_speedHash, _speed);
+        _animator.SetFloat(_turnHash, turn * (_maxSpeed - _speed));
         
         _characterController.Move(transform.forward * _speed * Time.deltaTime);
         transform.Rotate(Vector3.up, _turnSpeed * turn * Time.deltaTime);
